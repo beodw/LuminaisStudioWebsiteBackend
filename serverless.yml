@@ -19,6 +19,13 @@ functions:
           path: payment
           method: post
           cors: true
+  storeForm:
+    handler: handler.storeForm
+    events:
+      - http:
+          path: form/store
+          method: post
+          cors: true
 
 plugins:
   - serverless-offline
