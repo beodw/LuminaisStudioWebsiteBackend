@@ -2,19 +2,16 @@ service: backend
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
+  region: eu-west-1 # or your preferred AWS region
   environment:
-    MONIME_ACCESS_TOKEN: mon_Ee0sv2kOfGNwtzsB7AzYooaqrewcPr5cJMT8ltYwO1zcH7Qnk1PpxrfoTRm6fhu9
+    MONGO_URI: ${.env:MONGO_URI}
+    EMAIL_USER: ${.env:EMAIL_USER}
+    EMAIL_PASS: ${.env:EMAIL_PASS}
+    S3_BUCKET_NAME: ${.env:S3_BUCKET_NAME}
+  timeout: 30 # Increase timeout to 30 seconds
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: hello
-          method: get
-          cors: true
-
   processPayment:
     handler: handler.processPayment
     events:
