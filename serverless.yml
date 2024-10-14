@@ -5,27 +5,57 @@ provider:
   runtime: nodejs18.x
   region: eu-west-1 # or your preferred AWS region
   environment:
-    MONGO_URI: ${.env:MONGO_URI}
-    EMAIL_USER: ${.env:EMAIL_USER}
-    EMAIL_PASS: ${.env:EMAIL_PASS}
-    S3_BUCKET_NAME: ${.env:S3_BUCKET_NAME}
+    MONGO_URI: ${env:MONGO_URI}
+    EMAIL_USER: ${env:EMAIL_USER}
+    EMAIL_PASS: ${env:EMAIL_PASS}
+    S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
   timeout: 30 # Increase timeout to 30 seconds
 
 functions:
-  processPayment:
-    handler: handler.processPayment
+  processForm:
+    handler: handler.processForm
     events:
       - http:
-          path: payment
+          path: form
           method: post
-          cors: true
-  storeForm:
-    handler: handler.storeForm
+          cors:
+            origin: '*' # Or specify your frontend's domain for more security
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - Access-Control-Allow-Origin
+              - Access-Control-Allow-Headers
+            allowCredentials: false # Set to true if you're dealing with cookies
+
+  processPackage:
+    handler: handler.processPackage
     events:
       - http:
-          path: form/store
+          path: package
           method: post
-          cors: true
+          cors:
+            origin: '*' # Or specify your frontend's domain for more security
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - Access-Control-Allow-Origin
+              - Access-Control-Allow-Headers
+            allowCredentials: false # Set to true if you're dealing with cookies
+
+  # storeForm:
+  #   handler: handler.storeForm
+  #   events:
+  #     - http:
+  #         path: form/store
+  #         method: post
+  #         cors: true
+
 
 plugins:
   - serverless-offline

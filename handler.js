@@ -1,7 +1,9 @@
 "use strict";
 
-const { processPayment } = require("./controllers/paymentController");
-const { storeForm } = require("./controllers/formController");
+const { FormSubmission } = require("./controllers/formController");
+const {
+  updatePackageAndSendEmail,
+} = require("./controllers/packageController");
 
-module.exports.processPayment = processPayment;
-module.exports.storeForm = storeForm;
+module.exports.processForm = FormSubmission;
+module.exports.processPackage = updatePackageAndSendEmail;

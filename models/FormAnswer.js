@@ -9,6 +9,10 @@ const formAnswerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  package: {
+    type: String,
+    required: false,
+  },
   payment: {
     type: Boolean,
     default: false,
